@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public Transform[] targets;
+    public float smoothSpeed = 0.125f;
+    public Vector3 offset;
+
+    void LateUpdate()
     {
-        
+        if(targets == null || targets.Length == 0)
+            return;
+
+        Transform activeTarget = FindActiveTarget();
+
+        if(activeTarget == null) 
+            return;
+
+        Vector3 desiredPosition = activeTarget.position + offset;
+        desiredPosition.y = transform.position.y;
+
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        transform.position = smoothedPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+    Transform FindActiveTarget()
     {
-        
+        foreach (Transform target in targets)
+        {
+            if(target.gameObject.activeInHierarchy)
+                return target; 
+        }
+
+        return null;
     }
+
 }

@@ -246,6 +246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   rotationSpeed: 10
+--- !u!4 &222099444 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ca4a761453a6fdb49ac3753e54a513fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 222099440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,6 +402,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 317ff4f957d8b4940a3406a5a3f3d6e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targets:
+  - {fileID: 222099444}
+  smoothSpeed: 0.125
+  offset: {x: 6, y: 0, z: 2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
