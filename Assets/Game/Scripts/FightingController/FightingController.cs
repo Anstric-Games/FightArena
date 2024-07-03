@@ -17,6 +17,12 @@ public class FightingController : MonoBehaviour
     public float dodgeDistance = 2f;
     private float lastAttackTIme;
 
+    [Header("Effects and Sound")]
+    public ParticleSystem attack1Effect;
+    public ParticleSystem attack2Effect;
+    public ParticleSystem attack3Effect;
+    public ParticleSystem attack4Effect;
+
     void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -44,75 +50,80 @@ public class FightingController : MonoBehaviour
         {
             PerformAttack(3);
         }
+    }
 
+    void PerformMovement()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        void PerformMovement()
+        Vector3 movement = new Vector3(-verticalInput, 0, horizontalInput);
+
+        if (movement != Vector3.zero)
         {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
 
-            Vector3 movement = new Vector3(-verticalInput, 0, horizontalInput);
+            Quaternion targetRotation = Quaternion.LookRotation(movement);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            if (movement != Vector3.zero)
+            if (horizontalInput > 0)
             {
-
-                Quaternion targetRotation = Quaternion.LookRotation(movement);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-                if (horizontalInput > 0)
-                {
-                    animator.SetBool("Walking", true);
-                }
-                else if (horizontalInput < 0)
-                {
-                    animator.SetBool("Walking", true);
-                }
-                else
-                {
-                    animator.SetBool("Walking", true);
-                }
+                animator.SetBool("Walking", true);
+            }
+            else if (horizontalInput < 0)
+            {
+                animator.SetBool("Walking", true);
             }
             else
             {
-                animator.SetBool("Walking", false);
+                animator.SetBool("Walking", true);
             }
-
-            characterController.Move(movement * movementSpeed * Time.deltaTime);
-
         }
-
-        void PerformAttack(int attackIndex)
+        else
         {
-            if (Time.time - lastAttackTIme > attackCooldown)
-            {
-                animator.Play(attackAnimations[attackIndex]);
-
-                int damage = attackDamages;
-                Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + damage + "damage.");
-
-                lastAttackTIme = Time.time;
-
-                // Loop through each opponent.
-            }
-            else
-            {
-                // If the player tries to attack too quickly, inform them:
-                Debug.Log("Cannot perform attack yet. Cooldown time left");
-            }
+            animator.SetBool("Walking", false);
         }
 
-        void PerformDodgeFront()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                animator.Play("DodgeFrontAnimation");
-
-                Vector3 dodgeDirection = transform.forward * dodgeDistance;
-
-                characterController.Move(dodgeDirection);
-
-            }
-        }
+        characterController.Move(movement * movementSpeed * Time.deltaTime);
 
     }
+
+    void PerformAttack(int attackIndex)
+    {
+        if (Time.time - lastAttackTIme > attackCooldown)
+        {
+            animator.Play(attackAnimations[attackIndex]);
+
+            int damage = attackDamages;
+            Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + damage + "damage.");
+
+            lastAttackTIme = Time.time;
+
+            // Loop through each opponent.
+        }
+        else
+        {
+            // If the player tries to attack too quickly, inform them:
+            Debug.Log("Cannot perform attack yet. Cooldown time left");
+        }
+    }
+
+    void PerformDodgeFront()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            animator.Play("DodgeFrontAnimation");
+
+            Vector3 dodgeDirection = transform.forward * dodgeDistance;
+
+            characterController.Move(dodgeDirection);
+
+        }
+    }
+
+    public void Attack1Effect() { attack1Effect.Play(); }
+    public void Attack2Effect() { attack2Effect.Play(); }
+    public void Attack3Effect() { attack3Effect.Play(); }
+    public void Attack4Effect() { attack4Effect.Play(); }
+
+
 }
