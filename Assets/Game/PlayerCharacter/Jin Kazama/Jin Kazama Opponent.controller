@@ -161,7 +161,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 0ca7da7150167f24fbd31dffab5ba14e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 79aa5b66a676e3b45b80c73bf2a1018e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -271,7 +271,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JinKazama
+  m_Name: Jin Kazama Opponent
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Walking
@@ -368,7 +368,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 20f7e62608c6338479c0e35df2192353, type: 2}
+  m_Motion: {fileID: 7400000, guid: 0a000fa63f637f94381db8723290ad4b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

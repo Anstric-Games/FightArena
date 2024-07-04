@@ -15,6 +15,8 @@ public class FightingController : MonoBehaviour
     public int attackDamages = 5;
     public string[] attackAnimations = { "Attack1Animation", "Attack2Animation", "Attack3Animation", "Attack4Animation" };
     public float dodgeDistance = 2f;
+    public float attackRadius = 2.2f;
+    public Transform[] opponents;
     private float lastAttackTIme;
 
     [Header("Effects and Sound")]
@@ -99,6 +101,13 @@ public class FightingController : MonoBehaviour
             lastAttackTIme = Time.time;
 
             // Loop through each opponent.
+            foreach (Transform opponent in opponents)
+            {
+                if (Vector3.Distance(transform.position, opponent.position) <= attackRadius)
+                {
+                    opponent.GetComponent<OpponentAI>().StartCoroutine(opponent.GetComponent<OpponentAI>().PlayHitDamageAnimation(attackDamages));
+                }
+            }
         }
         else
         {
@@ -120,10 +129,33 @@ public class FightingController : MonoBehaviour
         }
     }
 
-    public void Attack1Effect() { attack1Effect.Play(); }
-    public void Attack2Effect() { attack2Effect.Play(); }
-    public void Attack3Effect() { attack3Effect.Play(); }
-    public void Attack4Effect() { attack4Effect.Play(); }
+    public IEnumerator PlayHitDamageAnimation(int takeDamage)
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        //Play a random hit sound
+
+        //Decrease Health
+
+        animator.Play("HitDamageAnimation");
+    }
+
+    public void Attack1Effect()
+    {
+        attack1Effect.Play();
+    }
+    public void Attack2Effect()
+    {
+        attack2Effect.Play();
+    }
+    public void Attack3Effect()
+    {
+        attack3Effect.Play();
+    }
+    public void Attack4Effect()
+    {
+        attack4Effect.Play();
+    }
 
 
 }
