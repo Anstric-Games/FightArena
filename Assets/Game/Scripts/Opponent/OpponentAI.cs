@@ -29,10 +29,16 @@ public class OpponentAI : MonoBehaviour
     public ParticleSystem attack3Effect;
     public ParticleSystem attack4Effect;
 
+    public AudioClip[] hitSounds;
+
+    [Header("Health")]
+    public int maxHealth = 100;
+    public int currentHealth;
 
 
-    private void Awake()
+    void Awake()
     {
+        currentHealth = maxHealth;
         createRandomNumber();
     }
 
@@ -101,9 +107,26 @@ public class OpponentAI : MonoBehaviour
 
         //Play a random hit sound
 
+        if (hitSounds != null && hitSounds.Length > 0)
+        {
+            int randomIndex = Random.Range(0, hitSounds.Length);
+            AudioSource.PlayClipAtPoint(hitSounds[randomIndex], transform.position);
+        }
+
         //Decrease Health
+        currentHealth -= takeDamage;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
 
         animator.Play("HitDamageAnimation");
+    }
+
+    void Die()
+    {
+        Debug.Log("Opponent Died");
     }
 
     void PerformDodgeFront()
