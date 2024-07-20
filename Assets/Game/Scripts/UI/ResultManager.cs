@@ -22,6 +22,15 @@ public class ResultManager : MonoBehaviour
                 return;
             }
         }
+
+        foreach (FightingController fightingController in fightingController)
+        {
+            if (fightingController.gameObject.activeSelf && fightingController.currentHealth <= 0)
+            {
+                SetResult("You lost");
+                return;
+            }
+        }
     }
 
     void SetResult(string result)
