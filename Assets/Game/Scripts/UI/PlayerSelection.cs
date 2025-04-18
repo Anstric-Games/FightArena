@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerSelection : MonoBehaviour
 {
     public GameObject playerCharacters;
-    private GameObject[] allCharacters;
+    public GameObject[] allCharacters;
     private int currentIndex = 0;
 
     private void Start()
@@ -24,11 +24,11 @@ public class PlayerSelection : MonoBehaviour
             currentIndex = PlayerPrefs.GetInt("SelectedCharacterIndex");
         }
 
-        ShowCurrentCharacter();
+        ShowCurrentCharacter(currentIndex);
 
     }
 
-    void ShowCurrentCharacter()
+    void ShowCurrentCharacter(int currentIndex)
     {
         foreach (GameObject character in allCharacters)
         {
@@ -42,14 +42,14 @@ public class PlayerSelection : MonoBehaviour
     {
         currentIndex = (currentIndex + 1) % allCharacters.Length;
 
-        ShowCurrentCharacter();
+        ShowCurrentCharacter(currentIndex);
     }
 
     public void PreviousCharacter()
     {
         currentIndex = (currentIndex - 1 + allCharacters.Length) % allCharacters.Length;
 
-        ShowCurrentCharacter();
+        ShowCurrentCharacter(currentIndex);
     }
 
     public void OnYesButtonCLick(string sceneName)

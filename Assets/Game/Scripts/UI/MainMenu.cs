@@ -7,22 +7,19 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainMenu;
-    public GameObject selectCharacterAndStageMenu;
     public GameObject optionMenu;
     public GameObject controlsMenu;
 
     private void Start()
     {
         mainMenu.SetActive(true);
-        selectCharacterAndStageMenu.SetActive(false);
         optionMenu.SetActive(false);
         controlsMenu.SetActive(false);
     }
 
-    public void PlayButtonClicked()
+    public void PlayButtonClicked(string sceneName)
     {
-        mainMenu.SetActive(false);
-        selectCharacterAndStageMenu.SetActive(true);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OptionsButtonClicked()
@@ -45,19 +42,8 @@ public class MainMenu : MonoBehaviour
     public void BackButtonClicked()
     {
         mainMenu.SetActive(true);
-        selectCharacterAndStageMenu.SetActive(false);
         optionMenu.SetActive(false);
         controlsMenu.SetActive(false);
     }
 
-    public void SelectCharacterClicked(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
-
-    public void SelectSceneClicked(string sceneName)
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(sceneName);
-    }
 }

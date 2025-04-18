@@ -106,23 +106,26 @@ public class FightingController : MonoBehaviour
             animator.Play(attackAnimations[attackIndex]);
 
             int damage = attackDamages;
-            Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + damage + "damage.");
+            //Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + damage + "damage.");
 
             lastAttackTIme = Time.time;
 
             // Loop through each opponent.
             foreach (Transform opponent in opponents)
             {
-                if (Vector3.Distance(transform.position, opponent.position) <= attackRadius)
+                if (opponent.gameObject.activeSelf)
                 {
-                    opponent.GetComponent<OpponentAI>().StartCoroutine(opponent.GetComponent<OpponentAI>().PlayHitDamageAnimation(attackDamages));
+                    if (Vector3.Distance(transform.position, opponent.position) <= attackRadius)
+                    {
+                        opponent.GetComponent<OpponentAI>().StartCoroutine(opponent.GetComponent<OpponentAI>().PlayHitDamageAnimation(attackDamages));
+                    }
                 }
             }
         }
         else
         {
             // If the player tries to attack too quickly, inform them:
-            Debug.Log("Cannot perform attack yet. Cooldown time left");
+            //Debug.Log("Cannot perform attack yet. Cooldown time left");
         }
     }
 
@@ -155,18 +158,18 @@ public class FightingController : MonoBehaviour
         currentHealth -= takeDamage;
         healthBar.SetHealth(currentHealth);
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        //if (currentHealth <= 0)
+        //{
+        //    Die();
+        //}
 
         animator.Play("HitDamageAnimation");
     }
 
-    void Die()
-    {
-        Debug.Log("Player Died");
-    }
+    //void Die()
+    //{
+    //    Debug.Log("Player Died");
+    //}
 
     public void Attack1Effect()
     {

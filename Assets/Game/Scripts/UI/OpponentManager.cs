@@ -11,7 +11,7 @@ public class OpponentManager : MonoBehaviour
     {
         if (opponentCharacters.Length == 0)
         {
-            Debug.LogError("No opponent assigned to OpponentManager!");
+            //Debug.LogError("No opponent assigned to OpponentManager!");
             return;
         }
 

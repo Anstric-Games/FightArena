@@ -244,6 +244,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2405187969127142939, guid: 2d13e99bc01b554449b6928b055efd53,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3299999065777776985, guid: 2d13e99bc01b554449b6928b055efd53,
         type: 3}
       propertyPath: m_IsActive
@@ -1734,6 +1739,21 @@ PrefabInstance:
       propertyPath: 'fightingController.Array.data[5]'
       value: 
       objectReference: {fileID: 1176683283}
+    - target: {fileID: 2819708751518357835, guid: b8eab092da4e7cb43a75c56269ae6004,
+        type: 3}
+      propertyPath: NoiseModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819708751518357835, guid: b8eab092da4e7cb43a75c56269ae6004,
+        type: 3}
+      propertyPath: ShapeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819708751518357835, guid: b8eab092da4e7cb43a75c56269ae6004,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3138038310369267362, guid: b8eab092da4e7cb43a75c56269ae6004,
         type: 3}
       propertyPath: healthBar
@@ -1992,7 +2012,7 @@ PrefabInstance:
     - target: {fileID: 5529619356662221928, guid: b8eab092da4e7cb43a75c56269ae6004,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5812140237738756534, guid: b8eab092da4e7cb43a75c56269ae6004,
         type: 3}
