@@ -18,6 +18,7 @@ public class OpponentAI : MonoBehaviour
     public int attackCount = 0;
     public int randomNumber;
     public float attackRadius = 2f;
+    public float attackAngle = 60f;
     public FightingController[] fightingController;
     public Transform[] players;
     public bool isTakingDamage;
@@ -54,33 +55,33 @@ public class OpponentAI : MonoBehaviour
 
         for (int i = 0; i < fightingController.Length; i++)
         {
-            
-            if (players[i].gameObject.activeSelf && Vector3.Distance(transform.position, players[i].position) <= attackRadius)
-            {
-                animator.SetBool("Walking", false);
 
-                if (Time.time - lastAttackTIme > attackCooldown)
+            if (players[i].gameObject.activeSelf)
+            {
+                float distance = Vector3.Distance(transform.position, players[i].position);
+                if (distance <= attackRadius && IsPlayerInAttackAngle(players[i].position))
                 {
-                    int randomAttackIndex = Random.Range(0, attackAnimations.Length);
+                    //if (IsPlayerInAttackAngle(players[i].position))
+                    //{
+                    animator.SetBool("Walking", false);
 
-                    if (!isTakingDamage)
+                    if (Time.time - lastAttackTIme > attackCooldown && !isTakingDamage)
                     {
+                        int randomAttackIndex = Random.Range(0, attackAnimations.Length);
                         PerformAttack(randomAttackIndex);
-                    }
 
-                    // Player Hit/Danage animation on the player.
-                    fightingController[i].StartCoroutine(fightingController[i].PlayHitDamageAnimation(attackDamages));
+                        // Player Hit/Danage animation on the player.
+                        fightingController[i].StartCoroutine(fightingController[i].PlayHitDamageAnimation(attackDamages));
+                    }
+                    //}
                 }
-            }
-            else
-            {
-                if (players[i].gameObject.activeSelf)
+                else
                 {
                     Vector3 direction = (players[i].position - transform.position).normalized;
                     characterController.Move(direction * movementSpeed * Time.deltaTime);
 
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, movementSpeed * Time.deltaTime);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
                     animator.SetBool("Walking", true);
                 }
@@ -92,11 +93,30 @@ public class OpponentAI : MonoBehaviour
     {
         animator.Play(attackAnimations[attackIndex]);
 
-        int damage = attackDamages;
-        Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + damage + "damage.");
+        Debug.Log("Performed attack" + (attackIndex + 1) + "dealing" + attackDamages + "damage.");
 
         lastAttackTIme = Time.time;
     }
+
+    bool IsPlayerInAttackAngle(Vector3 playerPosition)
+    {
+        // Get direction to player (ignoring Y axis)
+        Vector3 directionToPlayer = playerPosition - transform.position;
+        directionToPlayer.y = 0; // Ignore vertical difference
+        directionToPlayer.Normalize();
+
+        // Get forward direction of opponent (ignoring Y axis)
+        Vector3 forwardDirection = transform.forward;
+        forwardDirection.y = 0;
+        forwardDirection.Normalize();
+
+        // Calculate angle between forward direction and direction to player
+        float angle = Vector3.Angle(forwardDirection, directionToPlayer);
+
+        // If angle is less than half of our attack angle, player is in front
+        return angle <= (attackAngle / 2);
+    }
+
 
     void createRandomNumber()
     {
@@ -105,6 +125,7 @@ public class OpponentAI : MonoBehaviour
 
     public IEnumerator PlayHitDamageAnimation(int takeDamage)
     {
+        isTakingDamage = true;
         yield return new WaitForSeconds(0.3f);
 
         //Play a random hit sound
@@ -125,6 +146,7 @@ public class OpponentAI : MonoBehaviour
         }
 
         animator.Play("HitDamageAnimation");
+        isTakingDamage = false;
     }
 
     void Die()
@@ -141,21 +163,8 @@ public class OpponentAI : MonoBehaviour
         characterController.SimpleMove(dodgeDirection);
     }
 
-    public void Attack1Effect()
-    {
-        attack1Effect.Play();
-    }
-    public void Attack2Effect()
-    {
-        attack2Effect.Play();
-    }
-    public void Attack3Effect()
-    {
-        attack3Effect.Play();
-    }
-    public void Attack4Effect()
-    {
-        attack4Effect.Play();
-    }
-
+    public void Attack1Effect() => attack1Effect.Play();
+    public void Attack2Effect() => attack2Effect.Play();
+    public void Attack3Effect() => attack3Effect.Play();
+    public void Attack4Effect() => attack4Effect.Play();
 }
